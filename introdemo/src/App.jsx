@@ -26,6 +26,22 @@ const Button = (props) => {
   )
 }
 
+//Conditional rendering
+const History = (props) => {
+  if (props.allClick.length === 0) {
+    return (
+      <div>
+        the app is not clicked
+      </div>
+    )
+  }
+  return (
+    <div>
+      button press history: {props.allClick.join(' ')}
+    </div>
+  )
+}
+
 
 
 const App = () => {
@@ -107,7 +123,7 @@ const App = () => {
           onClick={handleRightClick}
           text = 'right'
         />
-        <p>{allClick.join(' ')}</p>
+        <History allClick = {allClick} />
         <p>{left}{right}</p>
 
 
