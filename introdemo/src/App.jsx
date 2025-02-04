@@ -47,7 +47,10 @@ const History = (props) => {
 const App = () => {
   const [counter, setCounter ] = useState(0)
   console.log('rendering with counter value', counter)
-
+  // hooks cannot must not be called from inside of a loop, a conditional expression, 
+  // or any place that is not a function defining a component. 
+  // This must be done to ensure that the hooks are always called in the same order, 
+  // and if this isn't the case the application will behave erratically.
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
   const [allClick, setAll] = useState([])
@@ -84,14 +87,17 @@ const App = () => {
   const course = 'Half Stack application development'
   const parts = [
     {
+    id: 0,
     name: 'Fundamentals of React',
     exercises: 10
   },
   {
+    id: 1,
     name: 'Using props to pass data',
     exercises: 7
   },
   {
+    id: 2,
     name: 'State of a component',
     exercises: 14
   }
@@ -129,7 +135,13 @@ const App = () => {
           text = 'reset'
         />
         <br></br>
-
+        <ul>
+          {parts.map(part => 
+            <li key={part.id}>
+            {part.name}
+            </li>
+          )}
+        </ul>
         </div>
     </>
   )
