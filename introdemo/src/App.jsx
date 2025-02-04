@@ -61,6 +61,9 @@ const App = () => {
   const handleClickReset = () => {
     console.log('reset value before', counter)
     setCounter(0)
+    setLeft(0)
+    setRight(0)
+    setAll([])
   }
  
   const handleLeftClick = () => {
@@ -110,11 +113,7 @@ const App = () => {
           text = 'plus one'
         />
         <br></br>
-        <Button 
-          onClick={handleClickReset}
-          text = 'reset'
-        />
-        <br></br>
+        
         <Button
           onClick={handleLeftClick}
           text = 'left'
@@ -125,7 +124,11 @@ const App = () => {
         />
         <History allClick = {allClick} />
         <p>{left}{right}</p>
-
+        <Button 
+          onClick={handleClickReset}
+          text = 'reset'
+        />
+        <br></br>
 
         </div>
     </>
