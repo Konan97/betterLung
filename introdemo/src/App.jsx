@@ -1,4 +1,5 @@
 import './App.css'
+import Button from './components/Button'
 import { useState } from 'react'
 
 // First letter of React component names must be capitalized.
@@ -18,16 +19,9 @@ const Display = (props) => {
   )
 }
 
-const Button = (props) => {
-  return (
-    <button onClick={props.onClick}>
-      {props.text}
-    </button>
-  )
-}
-
 //Conditional rendering
 const History = (props) => {
+  console.log("History",props)
   if (props.allClick.length === 0) {
     return (
       <div>
