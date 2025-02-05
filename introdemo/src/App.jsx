@@ -33,7 +33,6 @@ const History = (props) => {
 
 const App = (props) => {
   const [counter, setCounter ] = useState(0)
-  console.log('rendering with counter value', counter)
   // hooks cannot must not be called from inside of a loop, a conditional expression, 
   // or any place that is not a function defining a component. 
   // This must be done to ensure that the hooks are always called in the same order, 
@@ -44,10 +43,17 @@ const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   // access the data in the form using controlled components
   const [newNote, setNewNote] = useState('a new note...')
+  console.log("newNote: ", newNote)
 
   const addNote = (event) => {
     // prevent page to reload among submitting a form
     event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      id : String(notes.length + 1),
+    }
+    setNotes(notes.concat(noteObject))
+    setNewNote('')
     console.log('button clicked', event.target)
   }
 
