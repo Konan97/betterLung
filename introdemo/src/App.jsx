@@ -1,16 +1,9 @@
 import './App.css'
 import Button from './components/Button'
+import Note from './components/Note'
 import { useState } from 'react'
 
 // First letter of React component names must be capitalized.
-const Header = (props) => {
-  console.log(props.course)
-}
-
-// how to pass array of object to a react function
-const Content = (props) => {
-  
-}
 // lift state up
 const Display = (props) => {
   console.log('counter', props.counter)
@@ -38,7 +31,7 @@ const History = (props) => {
 
 
 
-const App = () => {
+const App = (props) => {
   const [counter, setCounter ] = useState(0)
   console.log('rendering with counter value', counter)
   // hooks cannot must not be called from inside of a loop, a conditional expression, 
@@ -48,6 +41,20 @@ const App = () => {
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
   const [allClick, setAll] = useState([])
+  const [notes, setNotes] = useState(props.notes)
+  // access the data in the form using controlled components
+  const [newNote, setNewNote] = useState('a new note...')
+
+  const addNote = (event) => {
+    // prevent page to reload among submitting a form
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  }
+
+  const handleNoteChange = (event) => {
+    console.log(event.target.value)
+    setNewNote(event.target.value)
+  }
 
   // Event handling click
   const handleClickIncrease = () => {
@@ -98,13 +105,7 @@ const App = () => {
 ]
 
   return (
-    <>
-
-        <p>
-          <Header course={course}/>
-          <Content parts={parts}/>
-        </p>
-        
+    <>  
         <div>
         <Display counter={counter}/>
         
@@ -131,11 +132,14 @@ const App = () => {
         <br></br>
         <ul>
           {parts.map(part => 
-            <li key={part.id}>
-            {part.name}
-            </li>
+            <Note key={part.id} note={part.name} /> 
           )}
         </ul>
+        <form onSubmit={addNote}>
+          <input value={newNote}
+                 onChange={handleNoteChange}/>
+          <button type="submit">save</button>
+        </form>
         </div>
     </>
   )
