@@ -1,7 +1,10 @@
 import './App.css'
+import axios from 'axios'
 import Button from './components/Button'
 import Note from './components/Note'
+import noteService from './services/noteService'
 import { useState } from 'react'
+import { useEffect } from 'react'
 
 // First letter of React component names must be capitalized.
 // lift state up
@@ -31,7 +34,7 @@ const History = (props) => {
 
 
 
-const App = (props) => {
+const App = () => {
   const [counter, setCounter ] = useState(0)
   // hooks cannot must not be called from inside of a loop, a conditional expression, 
   // or any place that is not a function defining a component. 
@@ -40,10 +43,23 @@ const App = (props) => {
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
   const [allClick, setAll] = useState([])
-  const [notes, setNotes] = useState(props.notes)
+  const [notes, setNotes] = useState([])
   // access the data in the form using controlled components
-  const [newNote, setNewNote] = useState('a new note...')
+  const [newNote, setNewNote] = useState('')
   console.log("newNote: ", newNote)
+
+  const hook = () => {
+    console.log('effect')
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        console.log('promise fulfilled')
+        setNotes(initialNotes)
+        console.log(initialNotes)
+      })
+  }
+
+  useEffect(hook, [])
 
   const addNote = (event) => {
     // prevent page to reload among submitting a form
@@ -52,10 +68,19 @@ const App = (props) => {
       content: newNote,
       id : String(notes.length + 1),
     }
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    
     console.log('button clicked', event.target)
+
+    noteService
+      .create(noteObject)
+      .then(response => {
+        console.log(response)
+        setNotes(notes.concat(response.data))
+        setNewNote('')
+      })
   }
+
+  
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
