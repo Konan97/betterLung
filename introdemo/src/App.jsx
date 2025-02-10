@@ -1,5 +1,4 @@
 import './App.css'
-import axios from 'axios'
 import Button from './components/Button'
 import Note from './components/Note'
 import noteService from './services/noteService'
