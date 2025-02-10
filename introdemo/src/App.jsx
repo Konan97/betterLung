@@ -46,7 +46,10 @@ const App = () => {
   const [notes, setNotes] = useState([])
   // access the data in the form using controlled components
   const [newNote, setNewNote] = useState('')
-  console.log("newNote: ", newNote)
+  const [formData, setFormData] = useState({
+    id: "",
+    content:"",
+  })
 
   const hook = () => {
     console.log('effect')
@@ -68,15 +71,34 @@ const App = () => {
       content: newNote,
       id : String(notes.length + 1),
     }
-    
-    console.log('button clicked', event.target)
+    console.log(noteObject)
 
     noteService
       .create(noteObject)
       .then(response => {
-        console.log(response)
+        console.log("response: ", response)
         setNotes(notes.concat(response.data))
         setNewNote('')
+      })
+  }
+
+  const updateNote = (event) => {
+    event.preventDefault(); //prevent page refresh
+    console.log("updated note: ", formData)
+    const {id, content} = formData
+
+    const note = notes.find(n => n.id === id)
+    console.log("original note: ", note)
+    console.log(id, content)
+    noteService
+      .update(formData).then(returnedNote => {
+        setNotes(notes.map(note => note.id === id? content: note)) // if note id == id return changedNote else note
+      })
+      .catch(error => {
+        alert(
+          `the note '${note.content}' cannot be found`
+        )
+        setNotes(notes.filter(n => n.id !== id)) // return a new array without current id
       })
   }
 
@@ -87,9 +109,17 @@ const App = () => {
     setNewNote(event.target.value)
   }
 
+  const handleNoteUpdate = (event) => {
+    console.log("handle updated note ", event.target.value)
+    setFormData({
+      [id]: content,
+    })
+    
+    
+  }
+
   // Event handling click
   const handleClickIncrease = () => {
-    console.log('value before', counter)
     setCounter(counter + 1)
   }
   
@@ -115,25 +145,6 @@ const App = () => {
 
   
   //In React, the individual things rendered in braces must be primitive values, such as numbers or strings.
-  
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-    id: 0,
-    name: 'Fundamentals of React',
-    exercises: 10
-  },
-  {
-    id: 1,
-    name: 'Using props to pass data',
-    exercises: 7
-  },
-  {
-    id: 2,
-    name: 'State of a component',
-    exercises: 14
-  }
-]
 
   return (
     <>  
@@ -161,15 +172,20 @@ const App = () => {
           text = 'reset'
         />
         <br></br>
-        <ul>
-          {parts.map(part => 
-            <Note key={part.id} note={part.name} /> 
-          )}
-        </ul>
+        
         <form onSubmit={addNote}>
           <input value={newNote}
                  onChange={handleNoteChange}/>
           <button type="submit">save</button>
+        </form>
+        <br></br>
+        <form onSubmit={updateNote}>
+          <input value={formData.id}
+                 onChange={handleNoteUpdate}
+                 />
+          <input value={formData.content}
+                 onChange={handleNoteUpdate}/>
+          <button type="submit">update</button>
         </form>
         </div>
     </>

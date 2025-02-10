@@ -6,13 +6,14 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-const create = newObject => {
+const create = (newObject) => {
     const request = axios.post(baseUrl, newObject)
     return request.then(response => response.data)
 }
 
-const update = (id, newObject) => {
-    const request = axios.put(`${baseUrl}/${id}`, newObject)
+const update = (newObject) => {
+    console.log("noteService: ", newObject)
+    const request = axios.put(`${baseUrl}/${newObject.id}`, newObject)
     return request.then(response => response.data)
 }
 
