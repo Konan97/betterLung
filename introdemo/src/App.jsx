@@ -45,10 +45,6 @@ const App = () => {
   const [notes, setNotes] = useState([])
   // access the data in the form using controlled components
   const [newNote, setNewNote] = useState('')
-  const [formData, setFormData] = useState({
-    id: "",
-    content:"",
-  })
 
   const hook = () => {
     console.log('effect')
@@ -81,26 +77,6 @@ const App = () => {
       })
   }
 
-  const updateNote = (event) => {
-    event.preventDefault(); //prevent page refresh
-    console.log("updated note: ", formData)
-    const {id, content} = formData
-
-    const note = notes.find(n => n.id === id)
-    console.log("original note: ", note)
-    console.log(id, content)
-    noteService
-      .update(formData).then(returnedNote => {
-        setNotes(notes.map(note => note.id === id? content: note)) // if note id == id return changedNote else note
-      })
-      .catch(error => {
-        alert(
-          `the note '${note.content}' cannot be found`
-        )
-        setNotes(notes.filter(n => n.id !== id)) // return a new array without current id
-      })
-  }
-
   
 
   const handleNoteChange = (event) => {
@@ -110,9 +86,6 @@ const App = () => {
 
   const handleNoteUpdate = (event) => {
     console.log("handle updated note ", event.target.value)
-    setFormData({
-      [id]: content,
-    })
     
     
   }
@@ -178,14 +151,7 @@ const App = () => {
           <button type="submit">save</button>
         </form>
         <br></br>
-        <form onSubmit={updateNote}>
-          <input value={formData.id}
-                 onChange={handleNoteUpdate}
-                 />
-          <input value={formData.content}
-                 onChange={handleNoteUpdate}/>
-          <button type="submit">update</button>
-        </form>
+        
         </div>
     </>
   )
