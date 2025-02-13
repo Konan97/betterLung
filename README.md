@@ -19,3 +19,25 @@ However, a global installation is not necessary. From the root directory of your
 <br />
 
 ```npm install``` to install all up-to-date dependencies of the project defined in package.json
+<br />
+For backend, if we make changes to the application's code we have to restart the application to see the changes. 
+<br />
+
+```npm install --save-dev nodemon``` nodemon will watch the files in the directory in which nodemon was started, and if any files change, nodemon will automatically restart your node application. <br />
+
+We can start our application with nodemon like this: ```node_modules/.bin/nodemon index.js```<br />
+
+```{
+  // ..
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  // ..
+}```
+We can now start the server in development mode with the command: <br/>
+
+```npm run dev```
+
+
