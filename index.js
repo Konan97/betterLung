@@ -61,8 +61,14 @@ app.post('/api/notes', (request, response) => {
   response.json(note)
 })
 
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World!</h1>')
+// get all
+app.get('/api/notes', (request, response) => {
+    if (notes.length > 0){
+      response.json(notes)
+    } else {
+      response.status(404).end()
+    }
+
 })
 
 app.get('/api/notes/:id', (request, response) => {
@@ -77,6 +83,7 @@ app.get('/api/notes/:id', (request, response) => {
     }
 })
 
+// remove the note
 app.delete('/api/notes/:id', (request, response) => {
   const id = request.params.id
   notes = notes.filter(note => note.id !== id)
