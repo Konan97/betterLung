@@ -77,17 +77,21 @@ const App = () => {
       })
   }
 
+  const deleteNote = (event) => {
+    event.preventDefault()
+
+    noteService
+      .remove(id)
+      .then(response => {
+        console.log("delete: ", response)
+      })
+  }
+
   
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
-  }
-
-  const handleNoteUpdate = (event) => {
-    console.log("handle updated note ", event.target.value)
-    
-    
   }
 
   // Event handling click
@@ -151,6 +155,10 @@ const App = () => {
           <button type="submit">save</button>
         </form>
         <br></br>
+        <form onSubmit={deleteNote}>
+          <input value={id}
+          />
+        </form>
         
         </div>
     </>
