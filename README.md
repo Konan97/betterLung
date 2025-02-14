@@ -40,4 +40,7 @@ We can now start the server in development mode with the command: <br/>
 
 ```npm run dev```
 
+<br />
+
+cross-origin resource sharing ```npm install cors```
 

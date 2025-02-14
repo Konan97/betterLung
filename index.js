@@ -2,8 +2,11 @@ console.log('hello world')
 
 import { createServer } from 'http'
 import express from 'express'
+import cors from 'cors'
+import { error } from 'console'
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 let notes = [
@@ -26,10 +29,34 @@ let notes = [
     }
 ]
 
-app.post('/api/notes', (request, response) => {
+// return unique id for the note
+const generatedId = () => {
   const maxId = notes.length > 0 ? 
+  // ... spread array: notes.map(n => Number(n.id))
   Math.max(...notes.map(n => Number(n.id))): 0
-  const note = request.body
+
+  return String(maxId + 1)
+
+}
+
+// post method
+app.post('/api/notes', (request, response) => {
+  const body = request.body
+
+  // if no content return 400 bad request
+  if (!body.content) {
+    return response.status(400).json({
+      error: 'content missing'
+    })
+  }
+  const note = {
+    content: body.content,
+    important: Boolean(body.important) || false,
+    id: generatedId(),
+  }
+  
+  notes = notes.concat(note)
+
   console.log(note)
   response.json(note)
 })
