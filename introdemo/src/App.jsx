@@ -45,6 +45,7 @@ const App = () => {
   const [notes, setNotes] = useState([])
   // access the data in the form using controlled components
   const [newNote, setNewNote] = useState('')
+  const [id, setId] = useState('')
 
   const hook = () => {
     console.log('effect')
@@ -84,6 +85,7 @@ const App = () => {
       .remove(id)
       .then(response => {
         console.log("delete: ", response)
+        setNotes(notes.filter(note => note.id !== id))
       })
   }
 
@@ -92,6 +94,11 @@ const App = () => {
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
+  }
+
+  const handleNoteDelete = (event) => {
+    console.log(event.target.value)
+    setId(event.target.value)
   }
 
   // Event handling click
@@ -125,39 +132,17 @@ const App = () => {
   return (
     <>  
         <div>
-        <Display counter={counter}/>
-        
-        <Button 
-          onClick={handleClickIncrease}
-          text = 'plus one'
-        />
-        <br></br>
-        
-        <Button
-          onClick={handleLeftClick}
-          text = 'left'
-        />
-        <Button
-          onClick={handleRightClick}
-          text = 'right'
-        />
-        <History allClick = {allClick} />
-        <p>{left}{right}</p>
-        <Button 
-          onClick={handleClickReset}
-          text = 'reset'
-        />
-        <br></br>
-        
         <form onSubmit={addNote}>
           <input value={newNote}
                  onChange={handleNoteChange}/>
-          <button type="submit">save</button>
+          <button type="submit">Add</button>
         </form>
+        
         <br></br>
         <form onSubmit={deleteNote}>
           <input value={id}
-          />
+                 onChange={handleNoteDelete}/>
+          <button type="submit">Delete</button>
         </form>
         
         </div>
