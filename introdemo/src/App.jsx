@@ -4,15 +4,11 @@ import Note from './components/Note'
 import noteService from './services/noteService'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Display from './components/Display'
 
 // First letter of React component names must be capitalized.
 // lift state up
-const Display = (props) => {
-  console.log('counter', props.counter)
-  return (
-    <div>{props.counter}</div>
-  )
-}
+
 
 //Conditional rendering
 const History = (props) => {
@@ -60,6 +56,10 @@ const App = () => {
 
   useEffect(hook, [])
 
+  const showAllNote = (event) => {
+    hook()
+  }
+
   const addNote = (event) => {
     // prevent page to reload among submitting a form
     event.preventDefault()
@@ -73,7 +73,8 @@ const App = () => {
       .create(noteObject)
       .then(response => {
         console.log("response: ", response)
-        setNotes(notes.concat(response.data))
+        //setNotes(notes.concat(response.data))
+        console.log("notes now", notes)
         setNewNote('')
       })
   }
@@ -102,8 +103,9 @@ const App = () => {
   }
 
   // Event handling click
-  const handleClickIncrease = () => {
-    setCounter(counter + 1)
+  const handleClickShowAll = (event) => {
+    console.log(event.target.value)
+    showAllNote()
   }
   
   const handleClickReset = () => {
@@ -132,12 +134,20 @@ const App = () => {
   return (
     <>  
         <div>
+          <Display items={notes}/>
+          <Button 
+            onClick={handleClickShowAll}
+            text='Show All'/>
+          
+        </div>
+
+        <div>
         <form onSubmit={addNote}>
           <input value={newNote}
                  onChange={handleNoteChange}/>
           <button type="submit">Add</button>
         </form>
-        
+
         <br></br>
         <form onSubmit={deleteNote}>
           <input value={id}

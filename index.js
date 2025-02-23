@@ -13,7 +13,6 @@ let notes = [
     {
       "id": "1",
       "content": "HTML is easy",
-      "important": true
     },
     {
       "id": "2",
@@ -50,9 +49,9 @@ app.post('/api/notes', (request, response) => {
     })
   }
   const note = {
-    content: body.content,
-    important: Boolean(body.important) || false,
     id: generatedId(),
+    content: body.content,
+    
   }
   
   notes = notes.concat(note)
