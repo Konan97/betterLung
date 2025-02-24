@@ -1,4 +1,18 @@
 # repo-exercise
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Technologies Used](#technologies-used)
+- 📂 [Setup Instructions](#setup-instructions)
+- 🔗 [Live Demo]
+- [Usage](#usage)
+- 🚀 [Contributing](#contributing)
+- [License](#license)
+- [Style](#style)
+
+🔗 [Live Demo]<br/>
+## Setup Instructions
 If you clone the project, run the command ```npm install``` before starting the application with ```npm run dev```.<br />
 <br />
 
@@ -18,29 +32,27 @@ However, a global installation is not necessary. From the root directory of your
 ```npm install express``` Express library to ease server-side development with Node
 <br />
 
-```npm install``` to install all up-to-date dependencies of the project defined in package.json
-<br />
-For backend, if we make changes to the application's code we have to restart the application to see the changes. 
-<br />
+```npm install``` to install all up-to-date dependencies of the project defined in package.json<br/>
 
 ```npm install --save-dev nodemon``` nodemon will watch the files in the directory in which nodemon was started, and if any files change, nodemon will automatically restart your node application. <br />
 
 We can start our application with nodemon like this: ```node_modules/.bin/nodemon index.js```<br />
-
-```{
-  // ..
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  // ..
-}```
-We can now start the server in development mode with the command: <br/>
 
 ```npm run dev```
 
 <br />
 
 cross-origin resource sharing ```npm install cors```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Style
+
+Please follow the Google TypeScript Style Guide `https://google.github.io/styleguide/tsguide.html`
 
