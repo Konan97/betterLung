@@ -73,7 +73,7 @@ const App = () => {
       .create(noteObject)
       .then(response => {
         console.log("response: ", response)
-        //setNotes(notes.concat(response.data))
+        setNotes(notes.concat(noteObject))
         console.log("notes now", notes)
         setNewNote('')
       })
@@ -87,6 +87,7 @@ const App = () => {
       .then(response => {
         console.log("delete: ", response)
         setNotes(notes.filter(note => note.id !== id))
+        setId('')
       })
   }
 
