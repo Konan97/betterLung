@@ -38,11 +38,13 @@ However, a global installation is not necessary. From the root directory of your
 
 We can start our application with nodemon like this: ```node_modules/.bin/nodemon index.js```<br />
 
-```npm run dev```
+```npm run dev``` <br />
 
-<br />
+cross-origin resource sharing ```npm install cors```<br/>
 
-cross-origin resource sharing ```npm install cors```
+For Front-end production build ```npm run build```<br/>
+
+```http://localhost:3001/index.html``` to view the Front-end
 
 ## Contributing
 
