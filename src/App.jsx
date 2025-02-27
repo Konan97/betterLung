@@ -50,7 +50,7 @@ const App = () => {
       .then(initialNotes => {
         console.log('promise fulfilled')
         setNotes(initialNotes)
-        console.log(initialNotes)
+        // console.log(initialNotes)
       })
   }
 

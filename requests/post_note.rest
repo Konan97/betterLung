@@ -1,9 +1,9 @@
-POST http://localhost:3001/api/notes
+POST http://localhost:80/api/notes
 Content-Type: application/json
 
 {
-    "content": "OK",
-    "important": true
+    "id": "4",
+    "content": "Try backend"
 }
 
 ###
