@@ -5,7 +5,7 @@ import noteService from './services/noteService'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import Display from './components/Display'
-
+import DynamicSearchBox from './components/DynamicSearchBox'
 // First letter of React component names must be capitalized.
 // lift state up
 
@@ -129,6 +129,7 @@ const App = () => {
     setRight(right + 1)
   }
 
+  const searchSuggestions = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
   
   //In React, the individual things rendered in braces must be primitive values, such as numbers or strings.
 
@@ -156,6 +157,9 @@ const App = () => {
           <button type="submit">Delete</button>
         </form>
         
+        </div>
+        <div>
+          <DynamicSearchBox suggestions={searchSuggestions} />
         </div>
     </>
   )
