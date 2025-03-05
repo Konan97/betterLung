@@ -1,4 +1,4 @@
-import './App.css'
+import './style/App.css'
 import React from "react"
 import Button from './components/Button'
 import Note from './components/Note'
@@ -36,15 +36,12 @@ const App = () => {
   // or any place that is not a function defining a component. 
   // This must be done to ensure that the hooks are always called in the same order, 
   // and if this isn't the case the application will behave erratically.
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [allClick, setAll] = useState([])
   const [notes, setNotes] = useState([])
   // access the data in the form using controlled components
   const [newNote, setNewNote] = useState('')
   const [id, setId] = useState('')
 
-  const hook = () => {
+  const allNote = () => {
     console.log('effect')
     noteService
       .getAll()
@@ -55,10 +52,10 @@ const App = () => {
       })
   }
 
-  useEffect(hook, [])
+  useEffect(allNote, [])
 
   const showAllNote = (event) => {
-    hook()
+    allNote()
   }
 
   const addNote = (event) => {
@@ -92,7 +89,6 @@ const App = () => {
       })
   }
 
-  
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
@@ -110,16 +106,10 @@ const App = () => {
     showAllNote()
   }
   
-  const handleClickReset = () => {
-    console.log('reset value before', counter)
-    setCounter(0)
-    setLeft(0)
-    setRight(0)
-    setAll([])
-  }
  
   const handleSearch = (query) => {
     console.log("Search Query:", query)
+
   }
 
   

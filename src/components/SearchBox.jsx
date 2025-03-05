@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../SearchBox.css";
+import "../style/SearchBox.css";
 import { Search } from "lucide-react";
 
 const SearchBox = ({ onSearch }) => {
