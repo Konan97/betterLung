@@ -8,24 +8,24 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.static('dist'))
+// app.use(express.static('dist'))
 
 let notes = [
     {
       "id": "1",
-      "content": "HTML is easy",
+      "content": "Non-small cell lung cancer is a type of cancer that forms in the tissues of the lung.",
     },
     {
       "id": "2",
-      "content": "hi"
+      "content": "The process used to find out if cancer cells have spread within and around the lung is called staging."
     },
     {
       "id": "3",
-      "content": "really"
+      "content": "Your plan will include information about your cancer, the goals of treatment, your treatment options and the possible side effects, and the expected length of treatment."
     },
     {
       "id": "4",
-      "content": "why"
+      "content": "Finding out that cancer has come back can cause feelings of shock, anger, sadness, and fear. But you have something now that you did not have before—experience."
     }
 ]
 

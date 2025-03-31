@@ -1,4 +1,5 @@
-# repo-exercise
+# Better Lung
+LLM powered medical assistant web application for Non-small cell lung cancer patients.
 
 ## Table of Contents
 
