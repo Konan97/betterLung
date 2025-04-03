@@ -4,11 +4,11 @@ import { createServer } from 'http'
 import express from 'express'
 import cors from 'cors'
 import { error } from 'console'
+import { addDocument, viewDocument } from './mongodbOperations.js'
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-// app.use(express.static('dist'))
 
 let notes = [
     {
@@ -38,6 +38,17 @@ const generatedId = () => {
   return String(maxId + 1)
 
 }
+
+app.get("/view", async (request, response) => {
+  try {
+    
+    const document = await viewDocument();
+    response.status(200).json(document)
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+
+  }
+});
 
 // post method
 app.post('/api/notes', (request, response) => {
@@ -92,7 +103,7 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

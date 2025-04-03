@@ -11,7 +11,6 @@ const uri = `mongodb+srv://${username}:${password}@${clusterUrl}/?authMechanism=
 
 // Function to connect to MongoDB
 async function connectDB() {
-  
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -59,7 +58,7 @@ async function addDocument(database, collection, content) {
   }
 }
 
-async function run() {
+async function viewDocument(filter = {}) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     const client = await connectDB();
@@ -74,17 +73,18 @@ async function run() {
     const query = {name: "Afatinib Dimaleate"};
     const drug_info = await drug_infos.findOne(query)
 
-    // const new_drug = await addDocument(database, collection, content)
     console.log(drug_info);
-    //console.log(new_drug)
+    
     // Ensures that the client will close when you finish/error
     await client.close();
+    return drug_info;
+
   } catch (err) {
     console.error("❌ Error Viewing Document:", err);
   }
 }
 
-run().catch(console.dir);
+viewDocument().catch(console.dir);
 //addDocument('NSLC_info', 'drug_info', content)
 /*"name":"Afatinib Dimaleate",
 "US_Brand":["Gilotrif"],
@@ -96,3 +96,4 @@ run().catch(console.dir);
 "FDA Approved": "Yes",
 "Use":["first-line treatment in patients whose tumors have certain EGFR gene mutations."]
 */
+export { addDocument, viewDocument };
