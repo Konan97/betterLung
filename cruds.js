@@ -1,28 +1,4 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
-
-const username = encodeURIComponent("sunyuting17");
-const password = encodeURIComponent("zOdHnRNIraLJ");
-const clusterUrl = "clusterbetterlung.odabm8d.mongodb.net";
-
-const authMechanism = "DEFAULT"
-
-//const uri = "mongodb+srv://sunyuting17:zOdHnRNIraLJ@clusterbetterlung.odabm8d.mongodb.net/";
-const uri = `mongodb+srv://${username}:${password}@${clusterUrl}/?authMechanism=${authMechanism}`
-
-// Function to connect to MongoDB
-async function connectDB() {
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-  await client.connect();
-  console.log("✅ Connected to MongoDB");
-  return client;
-}
+import { connectDB } from './db.js';
 
 // const content = {"name": "Gefitinib",
 // "US_Brand":["Iressa"],
@@ -48,31 +24,28 @@ async function addDocument(database, collection, content) {
     const client = await connectDB();
     const db = client.db(database);
     const drug_infos = db.collection(collection);
+    // add new doc
     const new_drug = await drug_infos.insertOne(content);
     console.log("✅ Document Added:", new_drug);
 
     await client.close();
+    return new_drug
 
   } catch (err) {
     console.error("❌ Error Adding Document:", err);
   }
 }
 
-async function viewDocument(filter = {}) {
+async function viewDocument(database, collection, filter = {}) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     const client = await connectDB();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-    const database = client.db('NSLC_info');
-    const drug_infos = database.collection('drug_info');
+    const db = client.db(database);
+    const drug_infos = db.collection(collection);
 
     // Query
-    const query = {name: "Afatinib Dimaleate"};
-    const drug_info = await drug_infos.findOne(query)
-
+    // filter object: const query = {name: "Afatinib Dimaleate"};
+    const drug_info = await drug_infos.find(filter).toArray();
     console.log(drug_info);
     
     // Ensures that the client will close when you finish/error
@@ -84,7 +57,48 @@ async function viewDocument(filter = {}) {
   }
 }
 
-viewDocument().catch(console.dir);
+async function updateDocument(database, collection, query, updateData) {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    const client = await connectDB();
+    const db = client.db(database);
+    const drug_infos = db.collection(collection);
+    
+    await drug_infos.updateOne(query, { $set: updateData});
+    const new_drug = await drug_infos.findOne(query);
+    await client.close();
+    return new_drug
+    
+  } catch (err) {
+    console.error("❌ Error Updating Document:", err);
+  }
+}
+
+
+async function deleteDocument(database, collection, filter = {}) {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    const client = await connectDB();
+    const db = client.db(database);
+    const drug_infos = db.collection(collection);
+
+    // Query
+    // filter object: const query = {name: "Afatinib Dimaleate"};
+    const result = await drug_infos.deleteOne(filter);
+    console.log(result);
+    // Ensures that the client will close when you finish/error
+    await client.close();
+    /* Print a message that indicates whether the operation deleted a
+    document */
+    return result.deletedCount === 1
+
+  } catch (err) {
+    console.error("❌ Error Deleting Document:", err);
+  }
+  
+}
+
+//viewDocument().catch(console.dir);
 //addDocument('NSLC_info', 'drug_info', content)
 /*"name":"Afatinib Dimaleate",
 "US_Brand":["Gilotrif"],
@@ -96,4 +110,4 @@ viewDocument().catch(console.dir);
 "FDA Approved": "Yes",
 "Use":["first-line treatment in patients whose tumors have certain EGFR gene mutations."]
 */
-export { addDocument, viewDocument };
+export { addDocument, viewDocument, updateDocument, deleteDocument };

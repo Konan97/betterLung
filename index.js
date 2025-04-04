@@ -1,10 +1,8 @@
-console.log('hello world')
-
 import { createServer } from 'http'
 import express from 'express'
 import cors from 'cors'
 import { error } from 'console'
-import { addDocument, viewDocument } from './mongodbOperations.js'
+import { addDocument, viewDocument } from './cruds.js'
 const app = express()
 
 app.use(cors())
@@ -41,7 +39,7 @@ const generatedId = () => {
 
 app.get("/view", async (request, response) => {
   try {
-    
+
     const document = await viewDocument();
     response.status(200).json(document)
   } catch (error) {
