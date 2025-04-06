@@ -1,31 +1,29 @@
-console.log('hello world')
-
 import { createServer } from 'http'
 import express from 'express'
 import cors from 'cors'
 import { error } from 'console'
+import { addDocument, viewDocument } from './cruds.js'
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.static('dist'))
 
 let notes = [
     {
       "id": "1",
-      "content": "HTML is easy",
+      "content": "Non-small cell lung cancer is a type of cancer that forms in the tissues of the lung.",
     },
     {
       "id": "2",
-      "content": "hi"
+      "content": "The process used to find out if cancer cells have spread within and around the lung is called staging."
     },
     {
       "id": "3",
-      "content": "really"
+      "content": "Your plan will include information about your cancer, the goals of treatment, your treatment options and the possible side effects, and the expected length of treatment."
     },
     {
       "id": "4",
-      "content": "why"
+      "content": "Finding out that cancer has come back can cause feelings of shock, anger, sadness, and fear. But you have something now that you did not have before—experience."
     }
 ]
 
@@ -38,6 +36,17 @@ const generatedId = () => {
   return String(maxId + 1)
 
 }
+
+app.get("/view", async (request, response) => {
+  try {
+
+    const document = await viewDocument();
+    response.status(200).json(document)
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+
+  }
+});
 
 // post method
 app.post('/api/notes', (request, response) => {
@@ -92,7 +101,7 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
