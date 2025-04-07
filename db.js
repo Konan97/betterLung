@@ -1,7 +1,8 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import 'dotenv/config'; // import dotenv
 
-const username = encodeURIComponent("sunyuting17");
-const password = encodeURIComponent("zOdHnRNIraLJ");
+const username = encodeURIComponent(process.env.DB_USER);
+const password = encodeURIComponent(process.env.DB_PASSWORD);
 const clusterUrl = "clusterbetterlung.odabm8d.mongodb.net";
 
 const authMechanism = "DEFAULT"

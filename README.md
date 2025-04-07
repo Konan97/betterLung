@@ -49,6 +49,8 @@ For Front-end production build ```npm run build```<br/>
 
 Install the Node.js Driver `npm install mongodb@6.15` <br/>
 
+Using `dotenv` is a super clean and secure way to store and access sensitive info like `DB_USER` and `DB_PASSWORD`
+
 
 ## Contributing
 
