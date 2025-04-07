@@ -28,7 +28,7 @@ async function addDocument(database, collection, content) {
     const new_drug = await drug_infos.insertOne(content);
     console.log("✅ Document Added:", new_drug);
 
-    await client.close();
+    //await client.close();
     return new_drug
 
   } catch (err) {
@@ -49,7 +49,7 @@ async function viewDocument(database, collection, filter = {}) {
     console.log(drug_info);
     
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
     return drug_info;
 
   } catch (err) {
@@ -66,7 +66,7 @@ async function updateDocument(database, collection, query, updateData) {
     
     await drug_infos.updateOne(query, { $set: updateData});
     const new_drug = await drug_infos.findOne(query);
-    await client.close();
+    // await client.close();
     return new_drug
     
   } catch (err) {
@@ -87,7 +87,7 @@ async function deleteDocument(database, collection, filter = {}) {
     const result = await drug_infos.deleteOne(filter);
     console.log(result);
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
     /* Print a message that indicates whether the operation deleted a
     document */
     return result.deletedCount === 1

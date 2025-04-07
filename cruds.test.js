@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { addDocument, viewDocument, updateDocument, deleteDocument } from './cruds.js';
-import { connectDB } from "./db.js";
+import { connectDB, closeDB } from "./db.js";
 
 const database = "NSLC_info"
 const testCollection = 'test_items';
@@ -33,9 +33,16 @@ try {
 
   await client.db(database).collection(testCollection).drop();
   console.log('🎉 All tests passed!');
+
+  process.on("SIGINT", async () => {
+    await closeDB();
+    process.exit(0);
+  });
+
 } catch (err) {
   console.error('❌ Test failed:', err.message);
   process.exit(1);
+  
 }
 
   
