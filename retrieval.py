@@ -1,11 +1,28 @@
 import json
 import numpy as np
+import ollama
+EMBEDDING_MODEL = 'hf.co/CompendiumLabs/bge-base-en-v1.5-gguf'
+LANGUAGE_MODEL = 'hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF'
+VCECTOR_DB = []
 
 def load_embeddings_from_file(filename="embeddings.json"):
-    with open(filename, 'r') as f:
-        embeddings_list = json.load(f)
-    # Convert lists back to numpy arrays
-    return [np.array(emb) for emb in embeddings_list]
+    """
+    Loads data from a JSON file and returns a Python list of dictionaries.
+    """
+    try:
+        with open(filename, 'r') as f:
+            data_list = json.load(f)
+        
+        print(f"Successfully loaded {len(data_list)} entries from {filename}")
+        return data_list
+    
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error: Could not decode JSON from the file '{filename}'. Check file format.")
+        return None
+
 
 def cosine_similarity(a, b):
   dot_product = sum([x * y for x, y in zip(a, b)])
@@ -13,7 +30,7 @@ def cosine_similarity(a, b):
   norm_b = sum([x ** 2 for x in b]) ** 0.5
   return dot_product / (norm_a * norm_b)
 
-def retrieve(query, top_n=3):
+def retrieve(query, VECTOR_DB, top_n=3):
   query_embedding = ollama.embed(model=EMBEDDING_MODEL, input=query)['embeddings'][0]
   # temporary list to store (chunk, similarity) pairs
   similarities = []
@@ -25,7 +42,7 @@ def retrieve(query, top_n=3):
   # finally, return the top N most relevant chunks
   return similarities[:top_n]
 
-
+VCECTOR_DB = load_embeddings_from_file("embeddings.json")
 input_query = input('Ask me a question: ')
 retrieved_knowledge = retrieve(input_query)
 
